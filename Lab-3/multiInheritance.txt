@@ -1,0 +1,37 @@
+Multi inheritance: a feature where a child class can inherit multiple attributes and methods from more than one class 
+Method resolution order (MRO): when a method is called on an object, Python determines which method to execute using the method resolution order.
+It defines the order in which base classes are searched for a method when it's not found in the current class. This is done using the super() function
+
+Example:
+class Vehicle:
+    def __init__(self, brand, speed):
+        self.brand = brand
+        self.speed = speed
+        print(f"Vehicle initialized: {self.brand} with speed {self.speed} km/h")
+
+    def drive(self):
+        print(f"The {self.brand} is driving at {self.speed} km/h")
+
+class Electric:
+    def __init__(self, battery_capacity):
+        self.battery_capacity = battery_capacity
+        print(f"Electric system initialized with {self.battery_capacity} kWh battery")
+
+    def charge(self):
+        print(f"Charging the battery with {self.battery_capacity} kWh capacity")
+
+class ElectricCar(Vehicle, Electric):
+    def __init__(self, brand, speed, battery_capacity):
+        super().__init__(brand, speed)  #calls the first parent in MRO (Vehicle)
+        Electric.__init__(self, battery_capacity)  #explicit call to Electric's __init__
+
+    def show_info(self):
+        print(f"{self.brand} Electric Car - Speed: {self.speed} km/h, Battery: {self.battery_capacity} kWh")
+
+print(ElectricCar.mro())
+
+tesla = ElectricCar("Tesla Model S", 200, 100)
+
+tesla.drive()   # inherited from Vehicle
+tesla.charge()  # inherited from Electric
+tesla.show_info()  # defined in ElectricCar

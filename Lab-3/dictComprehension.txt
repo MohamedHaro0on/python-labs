@@ -1,0 +1,9 @@
+Dictionary comprehension: allows for the generation of dictionary key value pairs using a single line of code making it more readable and efficient compared to using loops
+
+Syntax: {key_expression: value_expression for item in iterable if condition}
+
+Example: 
+
+even_squares = {num: num**2 for num in range(1, 11) if num % 2 == 0}
+print(even_squares)
+=> this should only print the squares of the even numbers between 1 and 11

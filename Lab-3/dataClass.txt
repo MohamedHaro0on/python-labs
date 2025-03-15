@@ -1,0 +1,22 @@
+dataclass: 
+
+1-  is a powerful feature in Python that simplifies the creation of classes used for storing data. 
+    It reduces boilerplate code and enhances readability, making it easier to work with data-centric classes.
+
+
+2 - it is a decorator that simplifies the creation of classes by automatically generating special methods.
+    without using dataclasses we will need to define the methods manually making the code more repetitive
+
+example:
+
+from dataclasses import dataclass
+
+@dataclass
+class Point:
+    x: int = 0
+    y: int = 0
+
+3- Type Annotations: dataclass requires type annotations for all fields, which helps with type checking and readability.
+
+4- Field Customization: You can customize fields using the field() function from the dataclasses module.
+   This allows you to set default values, default factories, and other options:
