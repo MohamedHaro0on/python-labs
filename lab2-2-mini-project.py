@@ -134,6 +134,20 @@ def add_start_date(format, today):
         except ValueError:
             print("Invalid date format! Please try again.")
 
+
+# ---------------------------------------------------------------------------
+# START ADD TARGET FUNCTION :
+def add_target():
+    while True:
+        target = input('Enter total target: ').strip().lower()
+        if target.isdigit() and int(target) > 0:
+            target = int(target)
+            break
+        else:
+            print('Please enter valid target ')
+    return target
+
+
 # ---------------------------------------------------------------------------
 # START ADD END DATE FUNCTION : 
 def add_end_date(format, start_date):
@@ -150,17 +164,34 @@ def add_end_date(format, start_date):
         except ValueError:
             print("Invalid date format! Please try again.")
 
+
+
 # ---------------------------------------------------------------------------
-# START ADD TARGET FUNCTION :
-def add_target():
-    while True:
-        target = input('Enter total target: ').strip().lower()
-        if target.isdigit() and int(target) > 0:
-            target = int(target)
-            break
+# VIEW USER'S PROJECTS :
+def view_my_projects():
+    print("Your Projects Page")
+    print("-"*25)
+    for project in projects:
+        if logged_user == project['created_by']:
+            printProject(project)
         else:
-            print('Please enter valid target ')
-    return target
+            continue
+
+    while True:
+        choice = input(
+            "\nDo you want to go back to main menu ? [y] for Yes & [any key] for No :\n").lower()
+        if choice == "y":
+            os.system('clear')
+            break
+
+
+
+# ---------------------------------------------------------------------------
+# START PRINT PROJECT FUNCTION :
+def printProject(project):
+    print(
+        f"Title: {project['title']} \nDetails: {project['details']} \nTotal Target is : {project['target']} \nStarted At:{project['start_date']} \nEnds At :{project['end_date']}\n   ")
+    print("*"*50)
 
 
 # ---------------------------------------------------------------------------
@@ -182,13 +213,6 @@ def create_project():
                      "end_date": end_date,
                      "created_by": logged_user})
 
-# ---------------------------------------------------------------------------
-# START PRINT PROJECT FUNCTION :
-def printProject(project):
-    print(
-        f"Title: {project['title']} \nDetails: {project['details']} \nTotal Target is : {project['target']} \nStarted At:{project['start_date']} \nEnds At :{project['end_date']}\n   ")
-    print("*"*50)
-
 
 # ---------------------------------------------------------------------------
 # START VIEW PROJECTS :
@@ -203,22 +227,35 @@ def view_projects():
             os.system('clear')
             break
 
-# ---------------------------------------------------------------------------
-# VIEW USER'S PROJECTS :
-def view_my_projects():
-    print("Your Projects Page")
-    print("-"*25)
-    for project in projects:
-        if logged_user == project['created_by']:
-            printProject(project)
-        else:
-            continue
 
+# ---------------------------------------------------------------------------
+# SEARCH IN PROJECTS :
+def search_Project():
+    print("Welcome in Search page ")
+    print("-"*30)
     while True:
-        choice = input(
-            "\nDo you want to go back to main menu ? [y] for Yes & [any key] for No :\n").lower()
-        if choice == "y":
-            os.system('clear')
+        try:
+            search_input = input(
+                "\nEnter a date in format [DD-MM-YYYY]: ").strip()
+            print("\n")
+            search_date = datetime.strptime(
+                search_input, format).strftime(format)
+            found = False
+
+            for project in projects:
+                if project['start_date'] == search_date or project['end_date'] == search_date:
+                    printProject(project)
+                    found = True
+
+            if not found:
+                print("No projects found with the given date.")
+
+        except ValueError:
+            print("Invalid date format! Please try again.")
+
+        flag = input(
+            '\nDo you want to Search for other field ? [y/Y] for Yes and [any key ] for No :') .strip().lower()
+        if flag != "y":
             break
 
 
@@ -298,35 +335,6 @@ def delete_project():
             projects.pop(int(choice)-1)
         break
 
-# ---------------------------------------------------------------------------
-# SEARCH IN PROJECTS :
-def search_Project():
-    print("Welcome in Search page ")
-    print("-"*30)
-    while True:
-        try:
-            search_input = input(
-                "\nEnter a date in format [DD-MM-YYYY]: ").strip()
-            print("\n")
-            search_date = datetime.strptime(
-                search_input, format).strftime(format)
-            found = False
-
-            for project in projects:
-                if project['start_date'] == search_date or project['end_date'] == search_date:
-                    printProject(project)
-                    found = True
-
-            if not found:
-                print("No projects found with the given date.")
-
-        except ValueError:
-            print("Invalid date format! Please try again.")
-
-        flag = input(
-            '\nDo you want to Search for other field ? [y/Y] for Yes and [any key ] for No :') .strip().lower()
-        if flag != "y":
-            break
 
 
 def project_form():

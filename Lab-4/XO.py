@@ -6,7 +6,7 @@ class Player:
 
 class Menu:
     def display_main_menu(self):
-        print("Welcome to Tic-Tac-Toe!")
+        print("Welcome to X O !")
         print("---------------------------------------------------------------------")
         print("1. Play")
         print("2. Exit")
@@ -30,7 +30,6 @@ def validate_choice(choice):
 
 class Board:
     def __init__(self, player1, player2):
-        #creating a 2 dimensional list
         self.board = [[" " for _ in range(3)] for _ in range(3)]
         self.players = [player1, player2]
         self.current_player = player1
